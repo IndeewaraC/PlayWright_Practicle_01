@@ -161,7 +161,7 @@ await page.pause();
 
 });
 
-test.only('UI Controls-2 Radio check box', async ({page}) => {
+test('UI Controls-2 Radio check box', async ({page}) => {
 await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
 
 await page.locator('#radio-btn-example .radioButton').first().click();
@@ -171,4 +171,18 @@ await page.locator('#radio-btn-example .radioButton').first().click();
 await expect(page.locator('#radio-btn-example .radioButton').first()).toBeChecked();
 //this is verify that the last radio button element is checked after clicking on it.
 
+});
+
+test.only('UI Controls-3 checkbox', async ({page}) => {
+    await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+
+    await page.locator('#checkbox-example #checkBoxOption1').click();
+     //this is select the checkbox element with the value "option1" and check it.
+     await expect(page.locator('#checkbox-example #checkBoxOption1')).toBeChecked();
+     //this is verify that the checkbox element with the value "option1" is checked after clicking on it.
+     await page.locator('#checkbox-example #checkBoxOption1').uncheck();
+     //this is uncheck the checkbox element with the value "option1" if it is checked.
+     await expect(page.locator('#checkbox-example #checkBoxOption1')).not.toBeChecked();
+     //we can also use .tobefalse() instead of .not.toBeChecked() to verify that the checkbox element is not checked.
+     //this is verify that the checkbox element with the value "option1" is not checked after unchecking it.
 });
