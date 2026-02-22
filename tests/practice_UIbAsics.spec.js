@@ -140,7 +140,7 @@ console.log(allCardsText);  //this is get the text content of all the card eleme
 
 });
 
-test.only('UI Controls', async ({page}) => {
+test('UI Controls', async ({page}) => {
 await page.goto('https://www.visions.ca/');
 
 const menuWrapper = page.locator('.signin-dropdown-wrapper').first();
@@ -158,5 +158,17 @@ await expect(page).toHaveURL(/.*account\/login/); //verify that the URL of the p
 
 await page.pause(); 
 //this is pause the test execution, which allows us to inspect the page and debug the test if needed.
+
+});
+
+test.only('UI Controls-2 Radio check box', async ({page}) => {
+await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+
+await page.locator('#radio-btn-example .radioButton').first().click();
+//await page.locator('input[type="checkbox"]').nth(1).click();
+//this is select the first radio button element and click on it, and then select the second checkbox element and click on it.
+
+await expect(page.locator('#radio-btn-example .radioButton').first()).toBeChecked();
+//this is verify that the last radio button element is checked after clicking on it.
 
 });
