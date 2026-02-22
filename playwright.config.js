@@ -34,7 +34,7 @@ const config = ({
   use: {
     // Set the browser to use for testing.
     browserName: 'chromium',
-  Headless: true,
+  Headless: false,
   }
 
 // projects: [

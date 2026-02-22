@@ -70,19 +70,51 @@ await page.locator('[value="Log In"]').click();
 
 });
 
-test.only('Login Function in OHRM', async ({page}) => {
+test('Login Function in OHRM', async ({page}) => {
 // test('First Test case',async ({ page}) =>  This is another way to write the test case, 
 // where we can directly use the page fixture provided by Playwright.
+
+const UN = page.locator('[name="username"]');
+const PW = page.locator('[name="password"]');
 
 await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
 console.log(await page.title()); 
 await expect(page).toHaveTitle('OrangeHRM');
 
-await page.locator('[name="username"]').fill("john");
-await page.locator('[name="password"]').fill("demo");
+await UN.type("john");
+await PW.type("demo");
 await page.locator('[type="submit"]').click();
 
 console.log(await page.locator("[class*='oxd-alert-content oxd-alert-content--error']").textContent());
+await expect(page.locator("[class*='oxd-alert-content oxd-alert-content--error']")).toContainText('Invalid credentials');
+
+//clear exsitisting text in the input field and type new text
+await UN.fill("");
+await UN.fill("Admin");
+await PW.fill("");
+await PW.fill("admin123");
+await page.locator('[type="submit"]').click();
+
+console.log(await page.locator("[class*='oxd-topbar-header-title']").textContent());
+await expect(page.locator("[class*='oxd-topbar-header-title']")).toContainText('Dashboard');
 
 });
+
+test.only('Select All card Elements- Vision Electronics', async ({page}) => {
+await page.goto('https://www.visions.ca/');
+
+const cards = page.locator(".product-item a"); //this is select all the card elements on the page using the CSS selector.
+const count = await cards.count(); //this is get the count of the card elements.
+
+console.log(await page.title()); 
+await expect(page).toHaveTitle(/Visions Electronics/);
+
+console.log(await cards.first().textContent()); //this is get the text content of the first card element and print it in the console.
+console.log(await cards.nth(1).textContent());
+
+const allCardsText = await cards.allTextContents();
+console.log(allCardsText);  //this is get the text content of all the card elements and print it in the console.
+
+});
+
