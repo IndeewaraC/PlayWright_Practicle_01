@@ -101,7 +101,7 @@ await expect(page.locator("[class*='oxd-topbar-header-title']")).toContainText('
 
 });
 
-test.only('Select All card Elements- Vision Electronics', async ({page}) => {
+test('Select All card Elements- Vision Electronics', async ({page}) => {
 await page.goto('https://www.visions.ca/');
 
 const cards = page.locator(".product-item a"); //this is select all the card elements on the page using the CSS selector.
@@ -118,3 +118,24 @@ console.log(allCardsText);  //this is get the text content of all the card eleme
 
 });
 
+test.only('Network Idle Method- Vision Electronics', async ({page}) => {
+const cards = page.locator(".product-item a"); //this is select all the card elements on the page using the CSS selector.
+const count = await cards.count(); //this is get the count of the card elements.
+
+
+await page.goto('https://www.visions.ca/');
+
+
+
+console.log(await page.title()); 
+await expect(page).toHaveTitle(/Visions Electronics/);
+ //this is wait for the network to be idle, which means that there are no more network requests being made.
+await page.waitForLoadState('networkidle');
+
+console.log(await cards.first().textContent()); //this is get the text content of the first card element and print it in the console.
+console.log(await cards.nth(1).textContent());
+
+const allCardsText = await cards.allTextContents();
+console.log(allCardsText);  //this is get the text content of all the card elements and print it in the console.
+
+});
