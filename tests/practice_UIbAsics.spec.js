@@ -214,7 +214,7 @@ await expect(Href).toHaveAttribute("class","blinkingText");
 // verify that the element has the expected class attribute value.
 });
 
-test('@Child windows hadl', async ({browser})=>
+test.only('@Child windows hadl', async ({browser})=>
  {
     const context = await browser.newContext();
     const page =  await context.newPage();
@@ -230,10 +230,11 @@ test('@Child windows hadl', async ({browser})=>
    ])//new page is opened
    
  
-   const  text = await newPage.locator(".red").textContent();
+    const  text = await newPage.locator(".red").textContent();
+    //textcontent() is a method that returns the text already in the DOM
     const arrayText = text.split("@")
     const domain =  arrayText[1].split(" ")[0]
-    //console.log(domain);
+   
     await page.locator("#username").fill(domain);
     console.log(await page.locator("#username").inputValue());
  
