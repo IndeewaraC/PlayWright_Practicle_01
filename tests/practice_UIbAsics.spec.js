@@ -173,7 +173,7 @@ await expect(page.locator('#radio-btn-example .radioButton').first()).toBeChecke
 
 });
 
-test.only('UI Controls-3 checkbox', async ({page}) => {
+test('UI Controls-3 checkbox', async ({page}) => {
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
 
     await page.locator('#checkbox-example #checkBoxOption1').click();
@@ -182,7 +182,60 @@ test.only('UI Controls-3 checkbox', async ({page}) => {
      //this is verify that the checkbox element with the value "option1" is checked after clicking on it.
      await page.locator('#checkbox-example #checkBoxOption1').uncheck();
      //this is uncheck the checkbox element with the value "option1" if it is checked.
-     await expect(page.locator('#checkbox-example #checkBoxOption1')).not.toBeChecked();
+
+     //await expect(page.locator('#checkbox-example #checkBoxOption1')).not.toBeChecked()
+      expect(await page.locator('#checkbox-example #checkBoxOption1').isChecked()).toBeFalsy();
      //we can also use .tobefalse() instead of .not.toBeChecked() to verify that the checkbox element is not checked.
      //this is verify that the checkbox element with the value "option1" is not checked after unchecking it.
 });
+
+test('UI Controls-4 dropdown', async ({page}) => {
+    await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+
+    const items = page.locator('.cen-right-align #dropdown-class-example');
+    const value = await items.selectOption('option1');
+    page.pause();
+
+    console.log(value); //this is get the value of the selected option in the dropdown and print it in the console.
+
+    expect(value).toContain('option1'); //this is verify that the value of the selected option in the dropdown is "option1".
+
+    expect(value).not.toContain('select'); 
+});
+
+test('UI Controls-5 Blink Banner Test', async ({page}) => {
+await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+
+const Href = page.locator("[href*='documents-request']");
+// this select by Href contains "documents-request" and click on it.
+await expect(Href).toHaveAttribute("class","blinkingText");
+// in herer we pass to toHaveAttribute() method the 
+// attribute name "class" and the expected value "blinkingText" to 
+// verify that the element has the expected class attribute value.
+});
+
+test('@Child windows hadl', async ({browser})=>
+ {
+    const context = await browser.newContext();
+    const page =  await context.newPage();
+    const userName = page.locator('#username');
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentLink = page.locator("[href*='documents-request']");
+ 
+    const [newPage]=await Promise.all(
+   [
+      context.waitForEvent('page'),//listen for any new page pending,rejected,fulfilled
+      documentLink.click(),
+   
+   ])//new page is opened
+   
+ 
+   const  text = await newPage.locator(".red").textContent();
+    const arrayText = text.split("@")
+    const domain =  arrayText[1].split(" ")[0]
+    //console.log(domain);
+    await page.locator("#username").fill(domain);
+    console.log(await page.locator("#username").inputValue());
+ 
+ });
+
