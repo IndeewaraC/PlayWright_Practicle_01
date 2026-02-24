@@ -1,4 +1,5 @@
 const  {test,expect} = require('@playwright/test'); 
+const { escape } = require('node:querystring');
 // this is import the test and expect functions from the Playwright testing library.
 
 
@@ -214,7 +215,7 @@ await expect(Href).toHaveAttribute("class","blinkingText");
 // verify that the element has the expected class attribute value.
 });
 
-test.only('@Child windows hadl', async ({browser})=>
+test('@Child windows hadl', async ({browser})=>
  {
     const context = await browser.newContext();
     const page =  await context.newPage();
@@ -240,3 +241,69 @@ test.only('@Child windows hadl', async ({browser})=>
  
  });
 
+ test.only('add Item to the Cart', async ({page}) => {
+
+const productname = "ZARA COAT 3";
+const products = page.locator(".card-body");
+
+await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
+await page.locator("#userEmail").fill("Indeewara@gmial.com");
+await page.locator("#userPassword").fill("Indee@123");
+await page.locator("#login").click();
+
+await page.waitForLoadState('networkidle');
+await page.locator(".card-body b").first().waitFor();
+
+const titles = await page.locator(".card-body b").allTextContents();
+console.log(titles);
+
+const count = await products.count();
+
+for(let i = 0; i < count; ++i){
+   if (await products.nth(i).locator("b").textContent() === productname)
+{
+//logic to add the product to the cart
+ await products.nth(i).locator("text= Add To Cart").click();
+ break;
+}
+}
+
+await page.locator("[routerlink*='cart']").click();
+await page.locator("div li").first().waitFor();// this is autowaiting method
+await expect(page).toHaveURL(/.*cart/);
+const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible(); //search only h3 tag which has the text "ZARA COAT 3" and wait for it to be visible on the page.
+expect(bool).toBeTruthy(); //verify that the product is added to the cart by checking if the element is visible on the page.
+
+await page. locator("text=Checkout").click();
+
+const CC = await page.locator(".form__cc input.text-validated").fill("4542 9931 9292 2222");
+console.log(CC);
+
+const month= await page.locator("select.ddl.input:first-of-type").selectOption("08");
+console.log(month);
+
+const year = await page.locator("select.ddl.input:last-of-type").selectOption("29");
+console.log(year);
+ 
+const CVVnum = await page.locator('div.field.small:has-text("CVV Code") input').fill("555");
+console.log(CVVnum);
+
+const nameoncard = await page.locator('div.field:has-text("Name on Card") input').fill("Indeewara");
+console.log(nameoncard);
+
+//auto suggetion dropdown handle
+await page.getByPlaceholder('Select Country').pressSequentially("Can", { delay: 150 });
+ const dropdown = await page.locator(".ta-results");
+await dropdown.waitFor();
+
+  const optionsCount = await dropdown.locator("button").count();
+   for (let i = 0; i < optionsCount; ++i) {
+      const text = await dropdown.locator("button").nth(i).textContent();
+      if (text === " Canada") //we can user text.trim() 
+        {
+         await dropdown.locator("button").nth(i).click();
+         break;
+      }
+   }
+await page.pause();
+ });
