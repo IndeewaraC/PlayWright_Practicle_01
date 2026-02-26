@@ -241,13 +241,14 @@ test('@Child windows hadl', async ({browser})=>
  
  });
 
- test.only('add Item to the Cart', async ({page}) => {
+ test('add Item to the Cart', async ({page}) => {
 
 const productname = "ZARA COAT 3";
 const products = page.locator(".card-body");
+const email = "Indeewara@gmial.com";
 
 await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
-await page.locator("#userEmail").fill("Indeewara@gmial.com");
+await page.locator("#userEmail").fill(email);
 await page.locator("#userPassword").fill("Indee@123");
 await page.locator("#login").click();
 
@@ -305,5 +306,42 @@ await dropdown.waitFor();
          break;
       }
    }
+   
+
+expect(page.locator(".user__name label")).toHaveText(email);
+expect(page.locator(".user__name input[type='text']")).toHaveValue(email);
+
+expect(page.locator(".action__submit").click());
+await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+const order_ID = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
+console.log(order_ID);
+
+await page.pause();
+ });
+
+ test('Go to ORders and Check Order ID', async ({page}) => {
+ const order_id = '699fbb110ab5a029774ae082';
+ const email = "Indeewara@gmial.com";
+
+await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
+await page.locator("#userEmail").fill(email);
+await page.locator("#userPassword").fill("Indee@123");
+await page.locator("#login").click();
+
+await page.waitForLoadState('networkidle');
+await page.locator("button[routerlink*='myorders']").click();
+await page.locator("tbody").waitFor();
+
+const rows = await page.locator("tbody tr");
+const count = await rows.count();
+
+for(let i = 0; i < count; ++i){
+   const rowOrderID = await rows.nth(i).locator("th").textContent();
+   if (rowOrderID.includes(order_id)) {
+      await rows.nth(i).locator("button").first().click();
+      expect(Number(rowOrderID)).toBe(Number(order_id));
+      break;
+   }
+}
 await page.pause();
  });
