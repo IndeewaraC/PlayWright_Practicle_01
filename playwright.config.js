@@ -35,6 +35,7 @@ const config = ({
     // Set the browser to use for testing.
     browserName: 'chromium',
   Headless: false,
+  viewport: { width: 1920, height: 1080 },
   }
 
 // projects: [

@@ -218,16 +218,16 @@ test('UI Controls-4 dropdown', async ({page}) => {
     expect(value).not.toContain('select'); 
 });
 
-//test('UI Controls-5 Blink Banner Test', async ({page}) => {
-//await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+test('UI Controls-5 Blink Banner Test', async ({page}) => {
+await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
 
-//const Href = page.locator("[href*='documents-request']");
+const Href = page.locator("[href*='documents-request']");
 // this select by Href contains "documents-request" and click on it.
-//await expect(Href).toHaveAttribute("class","blinkingText");
+await expect(Href).toHaveAttribute("class","blinkingText");
 // in herer we pass to toHaveAttribute() method the 
 // attribute name "class" and the expected value "blinkingText" to 
 // verify that the element has the expected class attribute value.
-//});
+});
 
 test('@Child windows hadl', async ({browser})=>
  {
