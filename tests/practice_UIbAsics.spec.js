@@ -102,14 +102,22 @@ await expect(page.locator("[class*='oxd-topbar-header-title']")).toContainText('
 
 });
 
-test('Select All card Elements- Vision Electronics', async ({page}) => {
-await page.goto('https://www.visions.ca/');
+test('Select All card Elements- Swag Labs', async ({page}) => {
+const UN = page.getByPlaceholder('Username');
+const PW = page.getByPlaceholder('Password');
 
-const cards = page.locator(".product-item a"); //this is select all the card elements on the page using the CSS selector.
+await page.goto('https://www.saucedemo.com/');
+
+await UN.fill("standard_user");
+await PW.fill("secret_sauce");
+await page.locator('[type="submit"]').click();
+
+
+const cards = page.locator(".inventory_item_description a"); //this is select all the card elements on the page using the CSS selector.
 const count = await cards.count(); //this is get the count of the card elements.
 
 console.log(await page.title()); 
-await expect(page).toHaveTitle(/Visions Electronics/);
+await expect(page).toHaveTitle('Swag Labs');
 
 console.log(await cards.first().textContent()); //this is get the text content of the first card element and print it in the console.
 console.log(await cards.nth(1).textContent());
@@ -119,17 +127,23 @@ console.log(allCardsText);  //this is get the text content of all the card eleme
 
 });
 
-test('Network Idle Method- Vision Electronics', async ({page}) => {
-const cards = page.locator(".product-item a"); //this is select all the card elements on the page using the CSS selector.
+test('Network Idle Method- Swag Labs', async ({page}) => {
+const cards = page.locator(".inventory_item_description a"); //this is select all the card elements on the page using the CSS selector.
 const count = await cards.count(); //this is get the count of the card elements.
 
+const UN = page.getByPlaceholder('Username');
+const PW = page.getByPlaceholder('Password');
 
-await page.goto('https://www.visions.ca/');
+await page.goto('https://www.saucedemo.com/');
+
+await UN.fill("standard_user");
+await PW.fill("secret_sauce");
+await page.locator('[type="submit"]').click();
 
 
 
 console.log(await page.title()); 
-await expect(page).toHaveTitle(/Visions Electronics/);
+await expect(page).toHaveTitle('Swag Labs');
  //this is wait for the network to be idle, which means that there are no more network requests being made.
 await page.waitForLoadState('networkidle');
 
