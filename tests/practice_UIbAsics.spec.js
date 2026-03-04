@@ -155,26 +155,26 @@ console.log(allCardsText);  //this is get the text content of all the card eleme
 
 });
 
-test('UI Controls', async ({page}) => {
-await page.goto('https://www.visions.ca/');
+//test('UI Controls', async ({page}) => {
+//await page.goto('https://www.visions.ca/');
 
-const menuWrapper = page.locator('.signin-dropdown-wrapper').first();
+//const menuWrapper = page.locator('.signin-dropdown-wrapper').first();
 //this is select the menu wrapper element on the page using the CSS selector 
 // and get the first element if there are multiple elements with the same class name.
 
-await menuWrapper.hover({force: true});
+//await menuWrapper.hover({force: true});
  //this is hover over the menu wrapper element to display the dropdown menu. The force option is used to force the hover action even if the element is not visible or interactable.
 
-const signInBtn = page.locator('.signin-links a', { hasText: 'Sign In' }).first();
+//const signInBtn = page.locator('.signin-links a', { hasText: 'Sign In' }).first();
 //this is select the sign in button element from the dropdown menu using the CSS selector and the hasText option to filter the elements based on their text content.
-await signInBtn.click({force: true}); //this is click on the sign in button to navigate to the sign in page.
+//await signInBtn.click({force: true}); //this is click on the sign in button to navigate to the sign in page.
 
-await expect(page).toHaveURL(/.*account\/login/); //verify that the URL of the page contains the expected path after clicking the sign in button.
+//await expect(page).toHaveURL(/.*account\/login/); //verify that the URL of the page contains the expected path after clicking the sign in button.
 
-await page.pause(); 
+//await page.pause(); 
 //this is pause the test execution, which allows us to inspect the page and debug the test if needed.
 
-});
+//});
 
 test('UI Controls-2 Radio check box', async ({page}) => {
 await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
