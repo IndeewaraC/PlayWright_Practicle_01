@@ -219,7 +219,7 @@ test('UI Controls-4 dropdown', async ({page}) => {
 });
 
 test('UI Controls-5 Blink Banner Test', async ({page}) => {
-await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
 
 const Href = page.locator("[href*='documents-request']");
 // this select by Href contains "documents-request" and click on it.
