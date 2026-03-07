@@ -70,11 +70,10 @@ test.describe('Calanders Automation Using Playwright', () => {
    await newPage.locator(".react-calendar__year-view__months__month").nth(Number(monthnumber-1)).click();
    await newPage.locator("//abbr[text()='"+date+"']").click();
 
-    
-
-
   });
 
 });
+
+
 
 
