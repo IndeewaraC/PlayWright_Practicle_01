@@ -72,7 +72,32 @@ test.describe('Calanders Automation Using Playwright', () => {
 
   });
 
+  test('calander Validation Automation', async ({page})=> {
+    const monthnumber = "9";
+    const yearnumber = "2027";
+    const date = "9";
+    const expectedList =[monthnumber,date,yearnumber];
+
+   await page.goto('https://rahulshettyacademy.com/seleniumPractise/#/offers');
+
+   await page.locator(".react-date-picker__inputGroup").click();
+   await page.locator(".react-calendar__navigation__label").click();
+   await page.locator(".react-calendar__navigation__label").click();
+
+   await page.getByText(yearnumber).click();
+   await page.locator(".react-calendar__year-view__months__month").nth(Number(monthnumber-1)).click();
+   await page.locator("//abbr[text()='"+date+"']").click();
+
+   const input = page.locator(".react-date-picker__inputGroup__input")
+
+   for(let i=0; i<expectedList.length; i++)
+    {
+      const value = await input.nth(i).inputValue();
+      expect(value).toEqual(expectedList[i]);
+   }
+
 });
+}); 
 
 
 
