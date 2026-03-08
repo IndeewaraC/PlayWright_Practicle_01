@@ -3,6 +3,7 @@
 // such as the test directory, timeout settings, and the browser to use for testing.
 
 const { defineConfig, devices } = require('@playwright/test');
+const { trace } = require('node:console');
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -36,9 +37,11 @@ const config = ({
     browserName: 'chromium',
   Headless: false,
   viewport: { width: 1920, height: 1080 },
+  screenshot: 'on',// Capture screenshots every 
+  trace: 'on', // Collect trace when retrying the failed test.
   }
 
-// projects: [
+// projects: 
 //   {
 //     name: 'Chromium',
 //     use: { 
