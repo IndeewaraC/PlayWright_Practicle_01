@@ -1,24 +1,28 @@
 import {test, expect} from '@playwright/test';
+import * as helper from '../utils/helper.js';
 
 
 test.describe('Assignment_09_01', () => {
 
 test.describe.configure({ mode: 'serial' });//runs like a serial test, one after another
-let bookingreforiginal = '';
-let testevent = `${Date.now()}`;
-let eventtitle = null;
-let bookingreffull = null;
-let fulltext = null;
-let seatsBeforeBooking = null;
-let seatsAfterBooking = null;
-let baseURL = 'https://eventhub.rahulshettyacademy.com/';
+//let bookingreforiginal = '';
+//let testevent = `${Date.now()}`;
+//let eventtitle = null;
+//let bookingreffull = null;
+//let fulltext = null;
+//let seatsBeforeBooking = null;
+//let seatsAfterBooking = null;
+//let baseURL = 'https://eventhub.rahulshettyacademy.com/';
 
 test.beforeEach('reusable login function', async ({ page }) => {
-  await page.goto(baseURL + 'login');
-  await page.getByPlaceholder('you@email.com').fill('indeewaragunathilaka@gmail.com');
-  await page.getByPlaceholder('••••••').fill('Playwright_282');
-  await page.getByRole('button', { name: 'Sign In' }).click();
-  await expect(page.getByRole('link', { name: 'Browse Events →' })).toBeVisible();
+  //await page.goto(baseURL + 'login');
+  //await page.getByPlaceholder('you@email.com').fill('indeewaragunathilaka@gmail.com');
+  //await page.getByPlaceholder('••••••').fill('Playwright_282');
+  //await page.getByRole('button', { name: 'Sign In' }).click();
+  //await expect(page.getByRole('link', { name: 'Browse Events →' })).toBeVisible();
+
+  //Use reusable login function from helper.js
+  await helper.reusablelogin(page);
 });
 
 test('Assignment_01_Step_01', async ({page}) => {
@@ -46,8 +50,8 @@ function futureDateValue() {
 
     await page.getByRole('link', { name: 'Manage Events' }).click();
     await page.getByTestId('event-title-input').click();
-    eventtitle = 'Test Event ' + testevent;
-    await page.getByTestId('event-title-input').fill(eventtitle);
+    helper.eventtitle = 'Test Event ' + helper.testevent;
+    await page.getByTestId('event-title-input').fill(helper.eventtitle);
     await page.getByRole('textbox', { name: 'Describe the event…' }).fill('This is Assignment 09_01');
     await page.getByLabel('City*').fill('winnipeg');
     await page.getByLabel('Venue').fill('University of Manitoba');
@@ -64,11 +68,11 @@ function futureDateValue() {
     //Access Created New Event
     await page.getByTestId('nav-events').click();
     await expect(page.getByTestId("event-card").first()).toBeVisible();
-    const mycard = page.getByTestId("event-card").filter({hasText: eventtitle});
+    const mycard = page.getByTestId("event-card").filter({hasText: helper.eventtitle});
     expect(mycard).toBeVisible({timeout: 5000});
 
-    fulltext = await mycard.getByText(/seats available/i).textContent();
-    seatsBeforeBooking = parseInt(fulltext.match(/\d+/)[0], 10);
+    helper.fulltext = await mycard.getByText(/seats available/i).textContent();
+    helper.seatsBeforeBooking = parseInt(helper.fulltext.match(/\d+/)[0], 10);
 
 //Step 04 Start Booking Seats
  await mycard.getByTestId('book-now-btn').click();
@@ -79,20 +83,20 @@ function futureDateValue() {
  await page.getByPlaceholder('+91 98765 43210').fill('+91 2265 22210');
  await page.locator('.confirm-booking-btn').click();
  //assertions 
-bookingreffull = page.locator('.booking-ref').first();
-await expect(bookingreffull).toBeVisible();
-bookingreforiginal = await bookingreffull.textContent();
+helper.bookingreffull = page.locator('.booking-ref').first();
+await expect(helper.bookingreffull).toBeVisible();
+helper.bookingreforiginal = await helper.bookingreffull.textContent();
 
 });
 
 test('Assignment_01_Step_07', async ({page}) => {
     //verify my booking in My Bookings
 await page.getByTestId('nav-bookings').click();
-await expect(page).toHaveURL(baseURL + 'bookings');
+await expect(page).toHaveURL(helper.baseURL+ 'bookings');
 const bookingcards= await page.getByTestId('booking-card');
 expect(bookingcards.first()).toBeVisible();
-await expect(bookingcards.filter({hasText: bookingreforiginal})).toBeVisible();
-await expect(bookingcards.filter({hasText: eventtitle})).toBeVisible();
+await expect(bookingcards.filter({hasText: helper.bookingreforiginal})).toBeVisible();
+await expect(bookingcards.filter({hasText: helper.eventtitle})).toBeVisible();
 
 });
 
@@ -100,11 +104,11 @@ test('Assignment_01_Step_08', async ({page}) => {
 //verify Seat Reduction after Booking
 await page.getByTestId('nav-events').click();
 await expect(page.getByTestId("event-card").first()).toBeVisible();
-const mycard = await page.getByTestId("event-card").filter({hasText: eventtitle});
+const mycard = await page.getByTestId("event-card").filter({hasText: helper.eventtitle});
 expect(mycard).toBeVisible({timeout: 5000});
 
-fulltext = await mycard.getByText(/seats available/i).textContent();
-seatsAfterBooking = parseInt(fulltext.match(/\d+/)[0], 10);
-await expect(seatsAfterBooking).toBe(seatsBeforeBooking - 1);
+helper.fulltext = await mycard.getByText(/seats available/i).textContent();
+helper.seatsAfterBooking = parseInt(helper.fulltext.match(/\d+/)[0], 10);
+await expect(helper.seatsAfterBooking).toBe(helper.seatsBeforeBooking - 1);
 });
 });
