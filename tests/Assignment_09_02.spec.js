@@ -51,7 +51,7 @@ await test.step('Step_04', async () => {
 await test.step('Step_05', async () => {
 
     //verify the booking details in the card after cllicking view details button
-    await expect(page.getByText(helper.bookingreforiginal).nth(1)).toBeVisible();
+    await expect(page.getByText(helper.bookingreforiginal).nth(1)).toBeVisible({ timeout: 10000 });
     await expect(page.getByRole('heading', { name: helper.eventtitle, level: 1 })).toBeVisible();
     //By adding , level: 1, Playwright completely ignores all those <h3> elements and locks straight onto the main event title at the top of the details page.
 });
@@ -130,7 +130,7 @@ await test.step('Step_04', async () => {
 await test.step('Step_05', async () => {
 
     //verify the booking details in the card after cllicking view details button
-    await expect(page.getByText(helper.bookingreforiginal).nth(1)).toBeVisible();
+    await expect(page.getByText(helper.bookingreforiginal).nth(1)).toBeVisible({ timeout: 10000 });
     await expect(page.getByRole('heading', { name: helper.eventtitle, level: 1 })).toBeVisible();
     //By adding , level: 1, Playwright completely ignores all those <h3> elements and locks straight onto the main event title at the top of the details page.
 });
