@@ -4,11 +4,22 @@ import { time } from 'node:console';
 import { equal } from 'node:assert';
 
 test.describe('Assignment_09_02_Section_01', () => {
+//variable decleration
+let eventtitle = null;
+let bookingreffull = null;
+let fulltext = null;
+let seatsBeforeBooking = null;
+let seatsAfterBooking = null;
+let bookingcards = null;
+let bookingreforiginal = '';
+
 test.describe.configure({ mode: 'serial' });  //runs like a serial test, one after another
 test.beforeEach('reusable login function', async ({ page }) => {
   //Use reusable login function from helper.js
   await helper.reusablelogin(page);
 });
+
+
 //login function and assertion to verify login is successful will be executed before each test case
 test('Assignment_02_Test_01_Step_01', async ({page}) => {
 await expect(page.getByRole('link', { name: 'Browse Events →' })).toBeVisible();
@@ -22,7 +33,7 @@ await test.step('Step_02 to _04', async () => {
     await expect(page.getByTestId("event-card").first()).toBeVisible();
     const mycard = page.getByTestId("event-card").first();
     expect(mycard).toBeVisible({timeout: 5000});
-    helper.eventtitle = await mycard.getByRole('heading').textContent();
+    eventtitle = await mycard.getByRole('heading').textContent();
 
 //select first card and click book now
     await mycard.getByTestId('book-now-btn').click();
@@ -31,7 +42,8 @@ await test.step('Step_02 to _04', async () => {
     await page.getByTestId('customer-email').fill('bonds@gmail.com');
     await page.getByPlaceholder('+91 98765 43210').fill('+91 2265 22210');
     await page.locator('.confirm-booking-btn').click();
-    helper.bookingreffull = page.locator('.booking-ref').first();
+    bookingreffull = page.locator('.booking-ref').first();
+});
 
 await test.step('Step_03', async () => {
 
@@ -51,8 +63,8 @@ await test.step('Step_04', async () => {
 await test.step('Step_05', async () => {
 
     //verify the booking details in the card after cllicking view details button
-    await expect(page.getByText(helper.bookingreforiginal).nth(1)).toBeVisible({ timeout: 10000 });
-    await expect(page.getByRole('heading', { name: helper.eventtitle, level: 1 })).toBeVisible();
+    await expect(page.getByText(bookingreforiginal).nth(1)).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole('heading', { name: eventtitle, level: 1 })).toBeVisible();
     //By adding , level: 1, Playwright completely ignores all those <h3> elements and locks straight onto the main event title at the top of the details page.
 });
 
@@ -63,13 +75,21 @@ await test.step('Step_06', async () => {
      await page.getByTestId('check-refund-btn').click();
      await expect(page.getByRole('status', { name: 'Loading' })).toBeVisible({ timeout: 6000 });
      await expect(page.getByText('Eligible for refund. Single-')).toBeVisible();
+
+
 });
 
-    });
 });
 });
 
 test.describe('Assignment_09_02_Section_02', () => {
+let eventtitle = null;
+let bookingreffull = null;
+let fulltext = null;
+let seatsBeforeBooking = null;
+let seatsAfterBooking = null;
+let bookingcards = null;
+let bookingreforiginal = '';
 test.describe.configure({ mode: 'serial' });  //runs like a serial test, one after another
 test.beforeEach('reusable login function', async ({ page }) => {
   //Use reusable login function from helper.js
@@ -89,7 +109,7 @@ await test.step('Step_02 to _04', async () => {
     await expect(page.getByTestId("event-card").first()).toBeVisible();
     const mycard = page.getByTestId("event-card").first();
     expect(mycard).toBeVisible({timeout: 5000});
-    helper.eventtitle = await mycard.getByRole('heading').textContent(); 
+    eventtitle = await mycard.getByRole('heading').textContent(); 
     
     //select first card and click book now
     await mycard.getByTestId('book-now-btn').click();
@@ -112,7 +132,7 @@ await test.step('Step_02 to _04', async () => {
     await page.getByTestId('customer-email').fill('bonds@gmail.com');
     await page.getByPlaceholder('+91 98765 43210').fill('+91 2265 22210');
     await page.locator('.confirm-booking-btn').click();
-    helper.bookingreffull = page.locator('.booking-ref').first();
+    bookingreffull = page.locator('.booking-ref').first();
 
     //navigate and verify booking in My Bookings page
     await page.getByTestId('nav-bookings').click();
@@ -130,8 +150,8 @@ await test.step('Step_04', async () => {
 await test.step('Step_05', async () => {
 
     //verify the booking details in the card after cllicking view details button
-    await expect(page.getByText(helper.bookingreforiginal).nth(1)).toBeVisible({ timeout: 10000 });
-    await expect(page.getByRole('heading', { name: helper.eventtitle, level: 1 })).toBeVisible();
+    await expect(page.getByText(bookingreforiginal).nth(1)).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole('heading', { name: eventtitle, level: 1 })).toBeVisible();
     //By adding , level: 1, Playwright completely ignores all those <h3> elements and locks straight onto the main event title at the top of the details page.
 });
 

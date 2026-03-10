@@ -88,13 +88,21 @@ test.describe('Calanders Automation Using Playwright', () => {
    await page.locator(".react-calendar__year-view__months__month").nth(Number(monthnumber-1)).click();
    await page.locator("//abbr[text()='"+date+"']").click();
 
-   const input = page.locator(".react-date-picker__inputGroup__input")
+   //const input = page.locator(".react-date-picker__inputGroup__input")
 
-   for(let i=0; i<expectedList.length; i++)
-    {
-      const value = await input.nth(i).inputValue();
-      expect(value).toEqual(expectedList[i]);
-   }
+   //for(let i=0; i<expectedList.length; i++)
+   // {
+    //  const value = await input.nth(i).inputValue();
+   //   expect(value).toEqual(expectedList[i]);
+  // }
+
+    const monthInput = page.locator("input[name='month']");
+    const dayInput = page.locator("input[name='day']");
+    const yearInput = page.locator("input[name='year']");
+
+    await expect(monthInput).toHaveValue(monthnumber);
+    await expect(dayInput).toHaveValue(date);
+    await expect(yearInput).toHaveValue(yearnumber);
 
 });
 }); 

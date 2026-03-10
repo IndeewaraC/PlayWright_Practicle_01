@@ -5,14 +5,14 @@ import * as helper from '../utils/helper.js';
 test.describe('Assignment_09_01', () => {
 
 test.describe.configure({ mode: 'serial' });//runs like a serial test, one after another
-//let bookingreforiginal = '';
-//let testevent = `${Date.now()}`;
-//let eventtitle = null;
-//let bookingreffull = null;
-//let fulltext = null;
-//let seatsBeforeBooking = null;
-//let seatsAfterBooking = null;
-//let baseURL = 'https://eventhub.rahulshettyacademy.com/';
+
+let bookingreforiginal = '';
+let eventtitle = '';
+let bookingreffull = '';
+let fulltext = '';
+let seatsBeforeBooking = '0';
+let seatsAfterBooking = '0';
+
 
 test.beforeEach('reusable login function', async ({ page }) => {
   //await page.goto(baseURL + 'login');
@@ -50,8 +50,8 @@ function futureDateValue() {
 
     await page.getByRole('link', { name: 'Manage Events' }).click();
     await page.getByTestId('event-title-input').click();
-    helper.eventtitle = 'Test Event ' + helper.testevent;
-    await page.getByTestId('event-title-input').fill(helper.eventtitle);
+    eventtitle = 'Test Event ' + helper.testevent;
+    await page.getByTestId('event-title-input').fill(eventtitle);
     await page.getByRole('textbox', { name: 'Describe the event…' }).fill('This is Assignment 09_01');
     await page.getByLabel('City*').fill('winnipeg');
     await page.getByLabel('Venue').fill('University of Manitoba');
@@ -68,11 +68,11 @@ function futureDateValue() {
     //Access Created New Event
     await page.getByTestId('nav-events').click();
     await expect(page.getByTestId("event-card").first()).toBeVisible();
-    const mycard = page.getByTestId("event-card").filter({hasText: helper.eventtitle});
+    const mycard = page.getByTestId("event-card").filter({hasText: eventtitle});
     expect(mycard).toBeVisible({timeout: 5000});
 
-    helper.fulltext = await mycard.getByText(/seats available/i).textContent();
-    helper.seatsBeforeBooking = parseInt(helper.fulltext.match(/\d+/)[0], 10);
+    fulltext = await mycard.getByText(/seats available/i).textContent();
+    seatsBeforeBooking = parseInt(fulltext.match(/\d+/)[0], 10);
 
 //Step 04 Start Booking Seats
  await mycard.getByTestId('book-now-btn').click();
@@ -83,9 +83,9 @@ function futureDateValue() {
  await page.getByPlaceholder('+91 98765 43210').fill('+91 2265 22210');
  await page.locator('.confirm-booking-btn').click();
  //assertions 
-helper.bookingreffull = page.locator('.booking-ref').first();
-await expect(helper.bookingreffull).toBeVisible();
-helper.bookingreforiginal = await helper.bookingreffull.textContent();
+bookingreffull = page.locator('.booking-ref').first();
+await expect(bookingreffull).toBeVisible();
+bookingreforiginal = await bookingreffull.textContent();
 
 });
 
@@ -93,10 +93,10 @@ test('Assignment_01_Step_07', async ({page}) => {
     //verify my booking in My Bookings
 await page.getByTestId('nav-bookings').click();
 await expect(page).toHaveURL(helper.baseURL+ 'bookings');
-const bookingcards= await page.getByTestId('booking-card');
-expect(bookingcards.first()).toBeVisible();
-await expect(bookingcards.filter({hasText: helper.bookingreforiginal})).toBeVisible();
-await expect(bookingcards.filter({hasText: helper.eventtitle})).toBeVisible();
+const myCard = page.getByTestId('booking-card').filter({hasText: bookingreforiginal});
+expect(myCard).toBeVisible();
+await expect(myCard.filter({hasText: bookingreforiginal})).toBeVisible();
+await expect(myCard.filter({hasText: eventtitle})).toBeVisible();
 
 });
 
@@ -104,11 +104,11 @@ test('Assignment_01_Step_08', async ({page}) => {
 //verify Seat Reduction after Booking
 await page.getByTestId('nav-events').click();
 await expect(page.getByTestId("event-card").first()).toBeVisible();
-const mycard = await page.getByTestId("event-card").filter({hasText: helper.eventtitle});
+const mycard = await page.getByTestId("event-card").filter({hasText: eventtitle});
 expect(mycard).toBeVisible({timeout: 5000});
 
-helper.fulltext = await mycard.getByText(/seats available/i).textContent();
-helper.seatsAfterBooking = parseInt(helper.fulltext.match(/\d+/)[0], 10);
-await expect(helper.seatsAfterBooking).toBe(helper.seatsBeforeBooking - 1);
+fulltext = await mycard.getByText(/seats available/i).textContent();
+seatsAfterBooking = parseInt(fulltext.match(/\d+/)[0], 10);
+await expect(seatsAfterBooking).toBe(seatsBeforeBooking - 1);
 });
 });

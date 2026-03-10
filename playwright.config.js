@@ -9,6 +9,7 @@ const { trace } = require('node:console');
  */
 const config = ({
   testDir: './tests', 
+  workers: process.env.CI ? 1 : undefined,
   // Specify the directory where the test files are located, 
   //we can also give the test js files in the testDir, 
   // for example: testDir: './tests/*.spec.js'

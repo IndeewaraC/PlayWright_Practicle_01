@@ -4,13 +4,6 @@ import {test, expect} from '@playwright/test';
 export const baseURL = 'https://eventhub.rahulshettyacademy.com/';
 export const UN = 'indeewaragunathilaka@gmail.com';
 export const PW = 'Playwright_282';
-export let eventtitle = null;
-export let bookingreffull = null;
-export let fulltext = null;
-export let seatsBeforeBooking = null;
-export let seatsAfterBooking = null;
-export let bookingcards = null;
-export let bookingreforiginal = '';
 export let testevent = `${Date.now()}`;
 
 export async function reusablelogin(page) {
