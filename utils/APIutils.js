@@ -1,7 +1,7 @@
 class APIutils
 {
 
-    constructor(apicontxt,loginPayload)
+    constructor(apicontxt,loginPayload)//constructor to initialize api context and login payload for API calls
     {
         this.apiContext = apicontxt;
         this.loginPayload = loginPayload;
