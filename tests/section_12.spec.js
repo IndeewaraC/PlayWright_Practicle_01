@@ -54,7 +54,7 @@ test.describe('Section 07 - Testing with Playwright', () => {
 
    });
 
-   test('Calanders Automation Using Playwright', async ({browser})=> {
+   test('New Test using saved state', async ({browser})=> {
     const page = await webContext.newPage();//create a new page in the new context and load the login state from the state.json file
      //In this test case we are using locators to automate login functionality of the client app
 

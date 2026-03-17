@@ -39,7 +39,7 @@ const config = ({
   Headless: false,
   viewport: { width: 1920, height: 1080 },
   screenshot: 'on',// Capture screenshots every 
-  trace: 'retain-on-failure', // Collect trace when retrying the failed test.
+  trace: 'on', // Collect trace when retrying the failed test.retain-on-failure
   }
 
 // projects: 
