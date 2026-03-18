@@ -1,4 +1,4 @@
-const {test,expect} = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 test.describe('Section 10', () => {
 
@@ -8,7 +8,7 @@ test.describe('Section 10', () => {
         //go forward and backward navigation
         //await page.goBack();
         //await page.goForward();
-        
+
     });
 
     test('Alert Validations', async ({ page }) => {
@@ -19,8 +19,9 @@ test.describe('Section 10', () => {
         await expect(page.locator("#displayed-text")).toBeHidden();
         await page.pause();
         page.on('dialog', async dialog => {
-                console.log(dialog.message());
-            dialog.accept()});//accept the dialog box (.dismiss() for cancel)
+            console.log(dialog.message());
+            dialog.accept()
+        });//accept the dialog box (.dismiss() for cancel)
 
         await page.locator("#confirmbtn").click();
 
@@ -40,5 +41,5 @@ test.describe('Section 10', () => {
 
     });
 
-    
+
 });
