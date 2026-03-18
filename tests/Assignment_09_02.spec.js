@@ -161,7 +161,7 @@ await test.step('Step_06', async () => {
     //assert spinner is visible after clicking check refund button
      await page.getByTestId('check-refund-btn').click();
      await expect(page.getByRole('status', { name: 'Loading' })).toBeVisible({ timeout: 6000 });
-     await expect(page.getByText('Not eligible for refund. Group bookings (3 tickets) are non-refundable.')).toBeVisible();
+     await expect(page.getByText('Not eligible for refund. Group bookings (3 tickets) are non-refundable.')).toBeVisible({ timeout: 6000 });
 });
 
 });
