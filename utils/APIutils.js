@@ -9,7 +9,7 @@ class APIutils
 
     async getToken()
     {
-    const loginResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", { data: this.loginPayload });//send post request to login endpoint with login payload
+    const loginResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", { data: this.loginPayload, headers: {'Content-Type': 'application/json','User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36','Origin': 'https://rahulshettyacademy.com','Referer': 'https://rahulshettyacademy.com/client/'} });//send post request to login endpoint with login payload
     
     const loginresponsejson = await loginResponse.json();
     const token = loginresponsejson.token; //get token from login response
@@ -19,7 +19,7 @@ class APIutils
 
     async getToken_01()
     {
-    const loginResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", { data: this.loginPayload });//send post request to login endpoint with login payload
+     const loginResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", { data: this.loginPayload, headers: {'Content-Type': 'application/json','User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36','Origin': 'https://rahulshettyacademy.com','Referer': 'https://rahulshettyacademy.com/client/'} });//send post request to login endpoint with login payload
     
     const loginresponsejson = await loginResponse.json();
     const token1 = loginresponsejson.token; //get token from login response
