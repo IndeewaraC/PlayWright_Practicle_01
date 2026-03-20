@@ -13,9 +13,9 @@ test('sandbox banner is shown when 6 events are returned', async ({ page }) => {
 
     await utils.loginAndGoToEvents(page);
     const cards = page.locator('[data-testid="event-card"]');
+    await expect(page.url()).toContain('/events');
     await expect(cards.first()).toBeVisible();
     await expect(cards).toHaveCount(6);
-
     const banner = page.getByText(/sandbox holds up to/i);
     await expect(banner).toBeVisible();
     await expect(banner).toContainText('9 bookings');
